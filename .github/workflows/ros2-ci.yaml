@@ -1,0 +1,32 @@
+name: ROS 2 CI Workflow
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build-melodic:
+    strategy:
+      fail-fast: false
+      matrix:
+        ros-version: [dashing, foxy]
+        include:
+          - ros-version: dashing
+            image: rostooling/setup-ros-docker:ubuntu-bionic-ros-dashing-ros-base-latest
+          - ros-version: foxy
+            image: rostooling/setup-ros-docker:ubuntu-focal-ros-foxy-ros-base-testing-latest
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.image }}
+    steps:
+      - name: Fix Bugs in ros-tooling/action-ros-ci
+        run: sudo chown -R rosbuild:rosbuild "$HOME" .
+      - name: Build Package
+        uses: ros-tooling/action-ros-ci@0.0.19
+        with:
+          package-name: tvm_vendor
+          target-ros2-distro: ${{ matrix.ros-version }}
+          vcs-repo-file-url: ""

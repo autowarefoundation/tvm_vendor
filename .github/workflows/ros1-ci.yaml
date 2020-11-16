@@ -1,4 +1,4 @@
-name: ROS CI Workflow
+name: ROS1 CI Workflow
 
 on:
   pull_request:
@@ -9,20 +9,9 @@ on:
 jobs:
 
   build-melodic:
-    strategy:
-      fail-fast: false
-      matrix:
-        ros-version: [melodic, dashing, foxy]
-        include:
-          - ros-version: melodic
-            image: rostooling/setup-ros-docker:ubuntu-bionic-ros-melodic-ros-base-latest
-          - ros-version: dashing
-            image: rostooling/setup-ros-docker:ubuntu-bionic-ros-dashing-ros-base-latest
-          - ros-version: foxy
-            image: rostooling/setup-ros-docker:ubuntu-focal-ros-foxy-ros-base-testing-latest
     runs-on: ubuntu-latest
     container:
-      image: ${{ matrix.image }}
+      image: rostooling/setup-ros-docker:ubuntu-bionic-ros-melodic-ros-base-latest
     steps:
       - name: Fix Bugs in ros-tooling/action-ros-ci
         run: sudo chown -R rosbuild:rosbuild "$HOME" .
@@ -30,5 +19,5 @@ jobs:
         uses: ros-tooling/action-ros-ci@0.0.19
         with:
           package-name: tvm_vendor
-          source-ros-binary-installation: ${{ matrix.ros-version }}
+          target-ros1-distro: melodic
           vcs-repo-file-url: ""
