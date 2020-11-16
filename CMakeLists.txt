@@ -10,17 +10,34 @@ if(NOT CMAKE_C_STANDARD)
 endif()
 
 include(ExternalProject)
-ExternalProject_Add(tvm
-  GIT_REPOSITORY https://github.com/apache/incubator-tvm
-  GIT_TAG v0.7.0
-  GIT_SHALLOW TRUE
-  BUILD_IN_SOURCE TRUE
-  PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
-  CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-  INSTALL_COMMAND ""
-)
 
-ExternalProject_Get_property(tvm SOURCE_DIR)
+if(${ROS_VERSION} EQUAL 1)
+  set(tvm_DESTDIR ${CMAKE_CURRENT_BINARY_DIR}/tvm_install)
+
+  ExternalProject_Add(tvm
+    GIT_REPOSITORY https://github.com/apache/incubator-tvm
+    GIT_TAG v0.7.0
+    GIT_SHALLOW TRUE
+    BUILD_IN_SOURCE TRUE
+    INSTALL_DIR ${tvm_DESTDIR}
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  )
+
+  set(SOURCE_DIR ${tvm_DESTDIR})
+elseif(${ROS_VERSION} EQUAL 2)
+  ExternalProject_Add(tvm
+    GIT_REPOSITORY https://github.com/apache/incubator-tvm
+    GIT_TAG v0.7.0
+    GIT_SHALLOW TRUE
+    BUILD_IN_SOURCE TRUE
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+    INSTALL_COMMAND ""
+  )
+
+  ExternalProject_Get_property(tvm SOURCE_DIR)
+endif()
 
 file(GLOB SHARED_LIBS
   "${SOURCE_DIR}/lib/*.so"
@@ -45,7 +62,7 @@ if(${ROS_VERSION} EQUAL 1)
   find_package(catkin REQUIRED)
 
   catkin_package(
-    INCLUDE_DIRS ${SOURCE_DIR}/include
+    INCLUDE_DIRS include
     LIBRARIES ${SHORT_LIBS}
   )
 
