@@ -22,11 +22,6 @@ if(${ROS_VERSION} EQUAL 1)
   # find dependencies
   find_package(catkin REQUIRED)
 
-  catkin_package(
-    INCLUDE_DIRS include
-    LIBRARIES ${SHORT_LIBS}
-  )
-
   ExternalProject_Add(tvm
     GIT_REPOSITORY https://github.com/apache/incubator-tvm
     GIT_TAG v0.7.0
@@ -49,6 +44,11 @@ if(${ROS_VERSION} EQUAL 1)
     string(REPLACE ${SOURCE_DIR}/lib/ "" SHORT_LIB ${SHARED_LIB})
     list(APPEND SHORT_LIBS ${SHORT_LIB})
   endforeach()
+
+  catkin_package(
+    INCLUDE_DIRS include
+    LIBRARIES ${SHORT_LIBS}
+  )
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
     DESTINATION ${CMAKE_INSTALL_PREFIX}/include/tvm/runtime
