@@ -12,43 +12,8 @@ endif()
 include(ExternalProject)
 
 if(${ROS_VERSION} EQUAL 1)
-  set(tvm_DESTDIR ${CMAKE_CURRENT_BINARY_DIR}/tvm_install)
-
-  ExternalProject_Add(tvm
-    GIT_REPOSITORY https://github.com/apache/incubator-tvm
-    GIT_TAG v0.7.0
-    GIT_SHALLOW TRUE
-    BUILD_IN_SOURCE TRUE
-    INSTALL_DIR ${tvm_DESTDIR}
-    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-  )
-
-  set(SOURCE_DIR ${tvm_DESTDIR})
 elseif(${ROS_VERSION} EQUAL 2)
-  ExternalProject_Add(tvm
-    GIT_REPOSITORY https://github.com/apache/incubator-tvm
-    GIT_TAG v0.7.0
-    GIT_SHALLOW TRUE
-    BUILD_IN_SOURCE TRUE
-    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-    INSTALL_COMMAND ""
-  )
-
-  ExternalProject_Get_property(tvm SOURCE_DIR)
 endif()
-
-file(GLOB SHARED_LIBS
-  "${SOURCE_DIR}/lib/*.so"
-)
-
-set(SHORT_LIBS "")
-
-foreach(SHARED_LIB ${SHARED_LIBS})
-  string(REPLACE ${SOURCE_DIR}/lib/ "" SHORT_LIB ${SHARED_LIB})
-  list(APPEND SHORT_LIBS ${SHORT_LIB})
-endforeach()
 
 if(${ROS_VERSION} EQUAL 1)
   cmake_minimum_required(VERSION 2.8.3)
@@ -65,6 +30,29 @@ if(${ROS_VERSION} EQUAL 1)
     INCLUDE_DIRS include
     LIBRARIES ${SHORT_LIBS}
   )
+
+  ExternalProject_Add(tvm
+    GIT_REPOSITORY https://github.com/apache/incubator-tvm
+    GIT_TAG v0.7.0
+    GIT_SHALLOW TRUE
+    BUILD_IN_SOURCE TRUE
+    INSTALL_DIR ${CATKIN_DEVEL_PREFIX}
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  )
+
+  ExternalProject_Get_property(tvm SOURCE_DIR)
+
+  file(GLOB SHARED_LIBS
+    "${SOURCE_DIR}/lib/*.so"
+  )
+
+  set(SHORT_LIBS "")
+
+  foreach(SHARED_LIB ${SHARED_LIBS})
+    string(REPLACE ${SOURCE_DIR}/lib/ "" SHORT_LIB ${SHARED_LIB})
+    list(APPEND SHORT_LIBS ${SHORT_LIB})
+  endforeach()
 
   install(DIRECTORY ${SOURCE_DIR}/include/
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
@@ -90,6 +78,18 @@ elseif(${ROS_VERSION} EQUAL 2)
 
   ament_export_include_directories(include)
   ament_export_libraries(${SHORT_LIBS})
+
+  ExternalProject_Add(tvm
+    GIT_REPOSITORY https://github.com/apache/incubator-tvm
+    GIT_TAG v0.7.0
+    GIT_SHALLOW TRUE
+    BUILD_IN_SOURCE TRUE
+    PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+    INSTALL_COMMAND ""
+  )
+
+  ExternalProject_Get_property(tvm SOURCE_DIR)
 
   install(DIRECTORY ${SOURCE_DIR}/include/
     DESTINATION include
