@@ -12,10 +12,6 @@ endif()
 include(ExternalProject)
 
 if(${ROS_VERSION} EQUAL 1)
-elseif(${ROS_VERSION} EQUAL 2)
-endif()
-
-if(${ROS_VERSION} EQUAL 1)
   cmake_minimum_required(VERSION 2.8.3)
 
   # Default to C++11
@@ -85,19 +81,9 @@ elseif(${ROS_VERSION} EQUAL 2)
     GIT_TAG v0.7.0
     GIT_SHALLOW TRUE
     BUILD_IN_SOURCE TRUE
+    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-    INSTALL_COMMAND ""
-  )
-
-  ExternalProject_Get_property(tvm SOURCE_DIR)
-
-  install(DIRECTORY ${SOURCE_DIR}/include/
-    DESTINATION include
-  )
-
-  install(DIRECTORY ${SOURCE_DIR}/lib/
-    DESTINATION lib
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   )
 
   ament_package()
