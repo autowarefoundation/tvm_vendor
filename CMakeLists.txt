@@ -9,28 +9,27 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-set(tvm_DESTDIR ${CMAKE_CURRENT_BINARY_DIR}/tvm_install)
-
 include(ExternalProject)
 ExternalProject_Add(tvm
   GIT_REPOSITORY https://github.com/apache/incubator-tvm
   GIT_TAG v0.7.0
   GIT_SHALLOW TRUE
   BUILD_IN_SOURCE TRUE
-  INSTALL_DIR ${tvm_DESTDIR}
   PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
   CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   INSTALL_COMMAND ""
 )
 
+ExternalProject_Get_property(tvm SOURCE_DIR)
+
 file(GLOB SHARED_LIBS
-  "${tvm_DESTDIR}/lib/*.so"
+  "${SOURCE_DIR}/lib/*.so"
 )
 
 set(SHORT_LIBS "")
 
 foreach(SHARED_LIB ${SHARED_LIBS})
-  string(REPLACE ${tvm_DESTDIR}/lib/ "" SHORT_LIB ${SHARED_LIB})
+  string(REPLACE ${SOURCE_DIR}/lib/ "" SHORT_LIB ${SHARED_LIB})
   list(APPEND SHORT_LIBS ${SHORT_LIB})
 endforeach()
 
@@ -46,15 +45,15 @@ if(${ROS_VERSION} EQUAL 1)
   find_package(catkin REQUIRED)
 
   catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS ${SOURCE_DIR}/include
     LIBRARIES ${SHORT_LIBS}
   )
 
-  install(DIRECTORY ${tvm_DESTDIR}/include/
+  install(DIRECTORY ${SOURCE_DIR}/include/
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   )
 
-  install(DIRECTORY ${tvm_DESTDIR}/lib/
+  install(DIRECTORY ${SOURCE_DIR}/lib/
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   )
 elseif(${ROS_VERSION} EQUAL 2)
@@ -75,11 +74,11 @@ elseif(${ROS_VERSION} EQUAL 2)
   ament_export_include_directories(include)
   ament_export_libraries(${SHORT_LIBS})
 
-  install(DIRECTORY ${tvm_DESTDIR}/include/
+  install(DIRECTORY ${SOURCE_DIR}/include/
     DESTINATION include
   )
 
-  install(DIRECTORY ${tvm_DESTDIR}/lib/
+  install(DIRECTORY ${SOURCE_DIR}/lib/
     DESTINATION lib
   )
 
