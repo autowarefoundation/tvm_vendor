@@ -1,4 +1,4 @@
-name: ROS 2 CI Workflow
+name: ROS2 CI Workflow
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build-melodic:
+  build-ros2:
     strategy:
       fail-fast: false
       matrix:
@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Fix Bugs in ros-tooling/action-ros-ci
         run: sudo chown -R rosbuild:rosbuild "$HOME" .
+      - name: Install coveragepy-result
+        run:  sudo apt-get update && sudo apt-get install -y python3-colcon-coveragepy-result
       - name: Build Package
         uses: ros-tooling/action-ros-ci@0.0.19
         with:

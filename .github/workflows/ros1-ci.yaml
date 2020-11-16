@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build-melodic:
+  build-ros1:
     runs-on: ubuntu-latest
     container:
       image: rostooling/setup-ros-docker:ubuntu-bionic-ros-melodic-ros-base-latest
