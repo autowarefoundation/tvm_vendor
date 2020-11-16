@@ -55,7 +55,7 @@ if(${ROS_VERSION} EQUAL 1)
   endforeach()
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/tvm/runtime
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/tvm/runtime
   )
 
   install(DIRECTORY ${SOURCE_DIR}/
