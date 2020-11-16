@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>tvm_vendor</name>
+  <version>0.7.0</version>
+  <description>Wrapper around Apache TVM to make it available to the ROS ecosystem.</description>
+  <maintainer email="josh.whitley@autoware.org">Josh Whitley</maintainer>
+  <license>Apache License 2.0</license>
+
+  <url type="bugtracker">https://github.com/casadi/casadi/issues</url>
+  <url type="repository">https://github.com/casadi/casadi</url>
+  <url type="website">http://casadi.org/</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>git</depend>
+  <depend>libopenblas-dev</depend>
+  <depend>llvm-dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
