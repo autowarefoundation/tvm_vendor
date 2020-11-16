@@ -19,8 +19,6 @@ if(${ROS_VERSION} EQUAL 1)
 
   # find dependencies
   find_package(catkin REQUIRED)
-
-  set(tvm_DESTDIR ${CATKIN_DEVEL_PREFIX})
 elseif(${ROS_VERSION} EQUAL 2)
   cmake_minimum_required(VERSION 3.5)
 
@@ -35,52 +33,65 @@ elseif(${ROS_VERSION} EQUAL 2)
 
   # find dependencies
   find_package(ament_cmake REQUIRED)
-
-  set(tvm_DESTDIR ${CMAKE_INSTALL_PREFIX})
 endif()
 
 include(ExternalProject)
 
-ExternalProject_Add(tvm
+ExternalProject_Add(tvm-build
   GIT_REPOSITORY https://github.com/apache/incubator-tvm
   GIT_TAG v0.7.0
   GIT_SHALLOW TRUE
   BUILD_IN_SOURCE TRUE
-  INSTALL_DIR ${tvm_DESTIDR}
   PATCH_COMMAND git apply ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch
   COMMAND cp <SOURCE_DIR>/cmake/config.cmake <SOURCE_DIR>
-  CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  CONFIGURE_COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  INSTALL_COMMAND ""
 )
 
-ExternalProject_Get_property(tvm SOURCE_DIR)
+ExternalProject_Get_property(tvm-build SOURCE_DIR)
 
-file(GLOB SHARED_LIBS
-  "${SOURCE_DIR}/*.so"
+add_library(tvm SHARED IMPORTED
+  IMPORTED_LOCATION ${SOURCE_DIR}/libtvm.so
 )
 
-set(SHORT_LIBS "")
-
-foreach(SHARED_LIB ${SHARED_LIBS})
-  string(REPLACE ${SOURCE_DIR}/ "" SHORT_LIB ${SHARED_LIB})
-  list(APPEND SHORT_LIBS ${SHORT_LIB})
-endforeach()
+add_library(tvm_runtime SHARED IMPORTED
+  IMPORTED_LOCATION ${SOURCE_DIR}/libtvm_runtime.so
+)
 
 if(${ROS_VERSION} EQUAL 1)
   catkin_package(
     INCLUDE_DIRS include
-    LIBRARIES ${SHORT_LIBS}
+    LIBRARIES ${tvm} ${tvm_runtime}
   )
 
-  install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/tvm/runtime
+  add_custom_command(TARGET tvm-build POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/include/tvm/runtime/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm/runtime
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CATKIN_DEVEL_PREFIX}/lib
+    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm.so ${CATKIN_DEVEL_PREFIX}/lib
+    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm_runtime.so ${CATKIN_DEVEL_PREFIX}/lib
   )
 
-  install(FILES ${SHARED_LIBS}
+  install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  )
+
+  install(DIRECTORY ${SOURCE_DIR}/
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    FILES_MATCHING PATTERN "*.so"
   )
 elseif(${ROS_VERSION} EQUAL 2)
   ament_export_include_directories(include)
-  ament_export_libraries(${SHORT_LIBS})
+  ament_export_libraries(${tvm} ${tvm_runtime})
+
+  install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
+    DESTINATION include/tvm/runtime
+  )
+
+  install(DIRECTORY ${SOURCE_DIR}/
+    DESTINATION lib
+    FILES_MATCHING PATTERN "*.so"
+  )
 
   ament_package()
 endif()
