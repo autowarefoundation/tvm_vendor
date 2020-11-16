@@ -44,7 +44,10 @@ if(${ROS_VERSION} EQUAL 1)
   # find dependencies
   find_package(catkin REQUIRED)
 
-  catkin_package()
+  catkin_package(
+    INCLUDE_DIRS include
+    LIBRARIES ${SHORT_LIBS}
+  )
 
   install(DIRECTORY ${tvm_DESTDIR}/include/
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
