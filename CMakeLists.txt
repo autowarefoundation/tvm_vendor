@@ -54,12 +54,13 @@ if(${ROS_VERSION} EQUAL 1)
     list(APPEND SHORT_LIBS ${SHORT_LIB})
   endforeach()
 
-  install(DIRECTORY ${SOURCE_DIR}/include/
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/tvm/runtime
   )
 
-  install(DIRECTORY ${SOURCE_DIR}/lib/
+  install(DIRECTORY ${SOURCE_DIR}/
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    FILES_MATCHING PATTERN *.so
   )
 elseif(${ROS_VERSION} EQUAL 2)
   cmake_minimum_required(VERSION 3.5)
