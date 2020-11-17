@@ -84,12 +84,11 @@ elseif(${ROS_VERSION} EQUAL 2)
   ament_export_libraries(tvm tvm_runtime)
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
-    DESTINATION include/tvm/runtime
+    DESTINATION include/${PROJECT_NAME}/tvm/runtime
   )
 
-  install(DIRECTORY ${SOURCE_DIR}/
+  install(FILES ${SOURCE_DIR}/libtvm.so ${SOURCE_DIR}/libtvm_runtime.so
     DESTINATION lib
-    FILES_MATCHING PATTERN ".so"
   )
 
   ament_package()
