@@ -70,14 +70,27 @@ if(${ROS_VERSION} EQUAL 1)
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CATKIN_DEVEL_PREFIX}/lib
     COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm.so ${CATKIN_DEVEL_PREFIX}/lib
     COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm_runtime.so ${CATKIN_DEVEL_PREFIX}/lib
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpack.h
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpackcpp.h
   )
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/tvm
   )
 
-  install(FILES ${SOURCE_DIR}/libtvm.so ${SOURCE_DIR}/libtvm_runtime.so
+  install(
+    FILES
+      ${SOURCE_DIR}/libtvm.so
+      ${SOURCE_DIR}/libtvm_runtime.so
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  )
+
+  install(
+    FILES
+      ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
+      ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/dlpack
   )
 elseif(${ROS_VERSION} EQUAL 2)
   ament_export_include_directories(include)
@@ -87,8 +100,18 @@ elseif(${ROS_VERSION} EQUAL 2)
     DESTINATION include/${PROJECT_NAME}/tvm/runtime
   )
 
-  install(FILES ${SOURCE_DIR}/libtvm.so ${SOURCE_DIR}/libtvm_runtime.so
+  install(
+    FILES
+      ${SOURCE_DIR}/libtvm.so
+      ${SOURCE_DIR}/libtvm_runtime.so
     DESTINATION lib
+  )
+
+  install(
+    FILES
+      ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
+      ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
+    DESTINATION include/${PROJECT_NAME}/dlpack
   )
 
   ament_package()
