@@ -76,9 +76,8 @@ if(${ROS_VERSION} EQUAL 1)
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/tvm
   )
 
-  install(DIRECTORY ${SOURCE_DIR}/
+  install(FILES ${SOURCE_DIR}/libtvm.so ${SOURCE_DIR}/libtvm_runtime.so
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    FILES_MATCHING PATTERN "*.so"
   )
 elseif(${ROS_VERSION} EQUAL 2)
   ament_export_include_directories(include)
@@ -90,7 +89,7 @@ elseif(${ROS_VERSION} EQUAL 2)
 
   install(DIRECTORY ${SOURCE_DIR}/
     DESTINATION lib
-    FILES_MATCHING PATTERN "*.so"
+    FILES_MATCHING PATTERN ".so"
   )
 
   ament_package()
