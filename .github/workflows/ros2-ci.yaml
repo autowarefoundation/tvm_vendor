@@ -9,26 +9,37 @@ on:
 jobs:
 
   build-ros2:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         ros-version: [dashing, foxy]
         include:
           - ros-version: dashing
-            image: rostooling/setup-ros-docker:ubuntu-bionic-ros-dashing-ros-base-latest
+            image: ros:dashing
           - ros-version: foxy
-            image: rostooling/setup-ros-docker:ubuntu-focal-ros-foxy-ros-base-testing-latest
-    runs-on: ubuntu-latest
+            image: ros:foxy
     container:
       image: ${{ matrix.image }}
     steps:
-      - name: Fix Bugs in ros-tooling/action-ros-ci
-        run: sudo chown -R rosbuild:rosbuild "$HOME" .
-      - name: Install coveragepy-result
-        run:  sudo apt-get update && sudo apt-get install -y python3-colcon-coveragepy-result
-      - name: Build Package
-        uses: ros-tooling/action-ros-ci@0.0.19
-        with:
-          package-name: tvm_vendor
-          target-ros2-distro: ${{ matrix.ros-version }}
-          vcs-repo-file-url: ""
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Create Workspace
+        run: |
+          mkdir -p src_tmp/tvm_vendor
+          mv `find -maxdepth 1 -not -name . -not -name src_tmp` src_tmp/tvm_vendor/
+          mv src_tmp/ src/
+      - name: Install Dependencies
+        run: |
+          bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; \
+          apt-get update && rosdep update; \
+          rosdep install --from-paths src --ignore-src -y'
+      - name: Build Workspace
+        run: |
+          bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; \
+          colcon build'
+      - name: Run Tests
+        run: |
+          bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; \
+          colcon test; \
+          colcon test-result --verbose'
