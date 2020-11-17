@@ -61,7 +61,7 @@ add_library(tvm_runtime SHARED IMPORTED
 if(${ROS_VERSION} EQUAL 1)
   catkin_package(
     INCLUDE_DIRS include
-    LIBRARIES ${tvm} ${tvm_runtime}
+    LIBRARIES tvm tvm_runtime
   )
 
   add_custom_command(TARGET tvm-build POST_BUILD
@@ -73,7 +73,7 @@ if(${ROS_VERSION} EQUAL 1)
   )
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/tvm
   )
 
   install(DIRECTORY ${SOURCE_DIR}/
@@ -82,7 +82,7 @@ if(${ROS_VERSION} EQUAL 1)
   )
 elseif(${ROS_VERSION} EQUAL 2)
   ament_export_include_directories(include)
-  ament_export_libraries(${tvm} ${tvm_runtime})
+  ament_export_libraries(tvm tvm_runtime)
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
     DESTINATION include/tvm/runtime
