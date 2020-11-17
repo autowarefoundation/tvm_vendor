@@ -37,9 +37,9 @@ jobs:
       - name: Build Workspace
         run: |
           bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; \
-          colcon build'
+          colcon build --event-handlers console_cohesion+'
       - name: Run Tests
         run: |
           bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; \
-          colcon test; \
+          colcon test --event-handlers console_cohesion+; \
           colcon test-result --verbose'
