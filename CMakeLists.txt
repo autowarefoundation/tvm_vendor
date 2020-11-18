@@ -52,7 +52,8 @@ ExternalProject_Add(tvm-build
 ExternalProject_Add_Step(tvm-build dmlc-build
   DEPENDEES patch
   WORKING_DIRECTORY <SOURCE_DIR>/3rdparty/dmlc-core
-  COMMAND ${CMAKE_COMMAND} --configure -DCMAKE_POSITION_INDEPENDENT_CODE=ON --build .
+  COMMAND ${CMAKE_COMMAND} --configure -DCMAKE_POSITION_INDEPENDENT_CODE=ON .
+  COMMAND ${CMAKE_MAKE_PROGRAM}
   BYPRODUCTS libdmlc.a
 )
 
@@ -91,7 +92,7 @@ if(${ROS_VERSION} EQUAL 1)
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpack.h
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpackcpp.h
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc/ ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlc
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a ${CATKIN_DEVEL_PREFIX}/lib
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a ${CATKIN_DEVEL_PREFIX}/lib/libdmlc.a
   )
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime
