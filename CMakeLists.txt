@@ -50,6 +50,13 @@ ExternalProject_Add(tvm-build
 
 ExternalProject_Get_property(tvm-build SOURCE_DIR)
 
+if(${ROs_VERSION} EQUAL 1)
+  catkin_package(
+    INCLUDE_DIRS include
+    LIBRARIES tvm tvm_runtime
+  )
+endif()
+
 add_library(tvm SHARED IMPORTED
   IMPORTED_LOCATION ${SOURCE_DIR}/libtvm.so
 )
@@ -59,11 +66,6 @@ add_library(tvm_runtime SHARED IMPORTED
 )
 
 if(${ROS_VERSION} EQUAL 1)
-  catkin_package(
-    INCLUDE_DIRS include
-    LIBRARIES tvm tvm_runtime
-  )
-
   add_custom_command(TARGET tvm-build POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/include/tvm/runtime/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm/runtime
