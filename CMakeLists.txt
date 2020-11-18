@@ -48,12 +48,23 @@ ExternalProject_Add(tvm-build
   INSTALL_COMMAND ""
 )
 
+# Build DMLC
+ExternalProject_Add_Step(tvm-build dmlc-build
+  DEPENDEES patch
+  WORKING_DIRECTORY <SOURCE_DIR>/3rdparty/dmlc-core
+  COMMAND ${CMAKE_COMMAND} --configure -DCMAKE_POSITION_INDEPENDENT_CODE=ON --build .
+  BYPRODUCTS libdmlc.a
+)
+
 ExternalProject_Get_property(tvm-build SOURCE_DIR)
 
-if(${ROs_VERSION} EQUAL 1)
+if(${ROS_VERSION} EQUAL 1)
   catkin_package(
     INCLUDE_DIRS include
-    LIBRARIES tvm tvm_runtime
+    LIBRARIES
+      tvm
+      tvm_runtime
+      dmlc
   )
 endif()
 
@@ -63,6 +74,10 @@ add_library(tvm SHARED IMPORTED
 
 add_library(tvm_runtime SHARED IMPORTED
   IMPORTED_LOCATION ${SOURCE_DIR}/libtvm_runtime.so
+)
+
+add_library(dmlc STATIC IMPORTED
+  IMPORTED_LOCATION ${SOURCE_DIR}/3rdparty/dmlc-core
 )
 
 if(${ROS_VERSION} EQUAL 1)
@@ -75,6 +90,8 @@ if(${ROS_VERSION} EQUAL 1)
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpack.h
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpackcpp.h
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc/ ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlc
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a ${CATKIN_DEVEL_PREFIX}/lib
   )
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime
@@ -93,6 +110,14 @@ if(${ROS_VERSION} EQUAL 1)
       ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
       ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/dlpack
+  )
+
+  install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/dmlc
+  )
+  
+  install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
+    DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   )
 elseif(${ROS_VERSION} EQUAL 2)
   ament_export_include_directories(include)
@@ -114,6 +139,14 @@ elseif(${ROS_VERSION} EQUAL 2)
       ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
       ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
     DESTINATION include/${PROJECT_NAME}/dlpack
+  )
+
+  install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
+    DESTINATION include/${PROJECT_NAME}/dmlc
+  )
+
+  install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
+    DESTINATION lib
   )
 
   ament_package()
