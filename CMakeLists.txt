@@ -138,7 +138,7 @@ elseif(${ROS_VERSION} EQUAL 2)
   )
 
   install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
-    DESTINATION include/${PROJECT_NAME}/dmlc
+    DESTINATION include/${PROJECT_NAME}
   )
 
   install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
