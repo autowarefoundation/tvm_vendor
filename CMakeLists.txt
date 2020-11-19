@@ -78,15 +78,15 @@ add_library(dmlc STATIC IMPORTED
 
 if(${ROS_VERSION} EQUAL 1)
   add_custom_command(TARGET tvm-build POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/include/tvm/runtime/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm/runtime
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/tvm
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/include/tvm/runtime/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/tvm/runtime
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CATKIN_DEVEL_PREFIX}/lib
     COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm.so ${CATKIN_DEVEL_PREFIX}/lib
     COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm_runtime.so ${CATKIN_DEVEL_PREFIX}/lib
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpack.h
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h ${CMAKE_CURRENT_SOURCE_DIR}/include/dlpack/dlpackcpp.h
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc/ ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlc
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dlpack
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dlpack/dlpack.h
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dlpack/dlpackcpp.h
+    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dmlc
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a ${CATKIN_DEVEL_PREFIX}/lib/libdmlc.a
   )
 
@@ -109,7 +109,7 @@ if(${ROS_VERSION} EQUAL 1)
   )
 
   install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/dmlc
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   )
   
   install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
