@@ -2,8 +2,8 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.1 (2020-12-01)
+------------------
 * Updating LLVM dependency.
 * Moving catkin_package() back to after add_library().
 * Contributors: Joshua Whitley
