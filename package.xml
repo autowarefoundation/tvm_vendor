@@ -19,7 +19,7 @@
   <depend>git</depend>
   <depend>libopenblas-dev</depend>
   <depend>libxml2</depend>
-  <depend>llvm-dev</depend>
+  <depend>llvm-7-dev</depend>
 
   <export>
     <build_type condition="$ROS_VERSION == 1">catkin</build_type>
