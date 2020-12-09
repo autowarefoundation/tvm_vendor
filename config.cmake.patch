@@ -11,15 +11,6 @@ diff --git a/cmake/config.cmake b/cmake/config.cmake
 index 9754385fa..126c90196 100644
 --- a/cmake/config.cmake
 +++ b/cmake/config.cmake
-@@ -115,7 +115,7 @@ set(USE_MICRO_STANDALONE_RUNTIME OFF)
- # - ON: enable llvm with cmake's find search
- # - OFF: disable llvm
- # - /path/to/llvm-config: enable specific LLVM when multiple llvm-dev is available.
--set(USE_LLVM OFF)
-+set(USE_LLVM ON)
- 
- #---------------------------------------------
- # Contrib libraries
 @@ -130,7 +130,7 @@ set(USE_LLVM OFF)
  set(USE_BYODT_POSIT OFF)
  
