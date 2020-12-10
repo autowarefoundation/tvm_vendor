@@ -2,8 +2,8 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.2 (2020-12-09)
+------------------
 * Removing LLVM dependency.
 * Contributors: Joshua Whitley
 
