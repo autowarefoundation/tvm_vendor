@@ -19,6 +19,9 @@
   <depend>git</depend>
   <depend>libopenblas-dev</depend>
   <depend>libxml2</depend>
+  <depend condition="$ROS_VERSION == 2">libvulkan-dev</depend>
+  <depend condition="$ROS_VERSION == 2">spirv-headers</depend>
+  <depend condition="$ROS_VERSION == 2">spirv-tools</depend>
 
   <export>
     <build_type condition="$ROS_VERSION == 1">catkin</build_type>

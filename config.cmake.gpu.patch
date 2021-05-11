@@ -1,7 +1,16 @@
 diff --git a/cmake/config.cmake b/cmake/config.cmake
-index 9754385fa..530c4bee1 100644
+index 9754385fa..a093f61fe 100644
 --- a/cmake/config.cmake
 +++ b/cmake/config.cmake
+@@ -79,7 +79,7 @@ set(USE_METAL OFF)
+ # - ON: enable Vulkan with cmake's auto search
+ # - OFF: disable vulkan
+ # - /path/to/vulkan-sdk: use specific path to vulkan-sdk
+-set(USE_VULKAN OFF)
++set(USE_VULKAN ON)
+ 
+ # Whether enable OpenGL runtime
+ set(USE_OPENGL OFF)
 @@ -130,7 +130,7 @@ set(USE_LLVM OFF)
  set(USE_BYODT_POSIT OFF)
  
@@ -11,4 +20,3 @@ index 9754385fa..530c4bee1 100644
  
  # Whether to use MKL
  # Possible values:
-
