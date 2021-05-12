@@ -144,5 +144,11 @@ elseif(${ROS_VERSION} EQUAL 2)
     DESTINATION lib
   )
 
+  install(
+    FILES
+      cmake/tvm_runtimeConfig.cmake
+      cmake/tvmConfig.cmake
+    DESTINATION share/${PROJECT_NAME}/cmake)
+
   ament_package()
 endif()
