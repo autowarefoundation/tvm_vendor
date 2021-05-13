@@ -138,7 +138,7 @@ elseif(${ROS_VERSION} EQUAL 2)
   ament_export_libraries(tvm tvm_runtime)
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
-    DESTINATION include/${PROJECT_NAME}/tvm/runtime
+    DESTINATION include/tvm/runtime
   )
 
   install(
@@ -152,7 +152,7 @@ elseif(${ROS_VERSION} EQUAL 2)
     FILES
       ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
       ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
-    DESTINATION include/${PROJECT_NAME}/dlpack
+    DESTINATION include/dlpack
   )
 
   install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
@@ -162,6 +162,12 @@ elseif(${ROS_VERSION} EQUAL 2)
   install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
     DESTINATION lib
   )
+
+  install(
+    FILES
+      cmake/tvm_runtimeConfig.cmake
+      cmake/tvmConfig.cmake
+    DESTINATION share/${PROJECT_NAME}/cmake)
 
   ament_package()
 endif()
