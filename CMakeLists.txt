@@ -134,7 +134,7 @@ if(${ROS_VERSION} EQUAL 1)
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   )
 elseif(${ROS_VERSION} EQUAL 2)
-  ament_export_include_directories(include)
+  ament_export_include_directories(include include/tvm_vendor)
   ament_export_libraries(tvm tvm_runtime)
 
   install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
