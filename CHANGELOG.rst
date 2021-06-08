@@ -2,8 +2,8 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.3 (2021-06-08)
+------------------
 * Merge pull request `#6 <https://github.com/autowarefoundation/tvm_vendor/issues/6>`_ from kurcha01-arm/main
   Fix 'No source or binary directory provided'
 * Merge pull request `#5 <https://github.com/autowarefoundation/tvm_vendor/issues/5>`_ from kurcha01-arm/main
