@@ -13,10 +13,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ros-version: [foxy]
+        ros-version: [foxy, galactic]
         include:
           - ros-version: foxy
             image: ros:foxy
+          - ros-version: galactic
+            image: ros:galactic
     container:
       image: ${{ matrix.image }}
     steps:
