@@ -2,6 +2,18 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#6 <https://github.com/autowarefoundation/tvm_vendor/issues/6>`_ from kurcha01-arm/main
+  Fix 'No source or binary directory provided'
+* Merge pull request `#5 <https://github.com/autowarefoundation/tvm_vendor/issues/5>`_ from kurcha01-arm/main
+  Fix header inclusion, export without namespacing
+* Merge pull request `#4 <https://github.com/autowarefoundation/tvm_vendor/issues/4>`_ from kurcha01-arm/main
+  Fix dlpack and tvm-runtime header inclusion
+* Merge pull request `#3 <https://github.com/autowarefoundation/tvm_vendor/issues/3>`_ from ambroise-arm/vulkan-backend
+  Add Vulkan backend
+* Contributors: Ambroise Vincent, Joshua Whitley, Kurtis Charnock
+
 0.7.2 (2020-12-09)
 ------------------
 * Removing LLVM dependency.
