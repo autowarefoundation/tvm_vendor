@@ -1,4 +1,4 @@
-# Copyright 2020-2021 The Autoware Foundation, Arm Ltd.
+# Copyright 2020-2022 The Autoware Foundation, Arm Ltd.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,8 +52,8 @@ if(ROS_VERSION EQUAL 2)
 endif()
 
 ExternalProject_Add(tvm-build
-  GIT_REPOSITORY https://github.com/apache/incubator-tvm
-  GIT_TAG v0.7.0
+  GIT_REPOSITORY https://github.com/apache/tvm
+  GIT_TAG v0.8.0
   GIT_SHALLOW TRUE
   BUILD_IN_SOURCE TRUE
   PATCH_COMMAND git apply ${PATCH_FILE}
