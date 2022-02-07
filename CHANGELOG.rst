@@ -2,8 +2,8 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.0 (2022-02-07)
+------------------
 * Update TVM version (`#7 <https://github.com/autowarefoundation/tvm_vendor/issues/7>`_)
   This patch is needed to properly run the packages that
   use ML models from the modelzoo.
