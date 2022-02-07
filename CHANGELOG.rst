@@ -2,6 +2,16 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update TVM version (`#7 <https://github.com/autowarefoundation/tvm_vendor/issues/7>`_)
+  This patch is needed to properly run the packages that
+  use ML models from the modelzoo.
+  Issue-Id: SCM-3720
+  Change-Id: I331efb40337ac15ec6b84ed9b9050fa42e49dc0f
+* CI: Add Galactic CI
+* Contributors: Joshua Whitley, Luca Foschiani
+
 0.7.3 (2021-06-08)
 ------------------
 * Merge pull request `#6 <https://github.com/autowarefoundation/tvm_vendor/issues/6>`_ from kurcha01-arm/main
