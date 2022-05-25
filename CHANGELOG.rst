@@ -2,6 +2,13 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat: support jammy (`#9 <https://github.com/autowarefoundation/tvm_vendor/issues/9>`_)
+  * fix CMakeLists.txt to build on jammy
+  * ci: update ros2 ci
+* Contributors: Daisuke Nishimatsu
+
 0.8.0 (2022-02-07)
 ------------------
 * Update TVM version (`#7 <https://github.com/autowarefoundation/tvm_vendor/issues/7>`_)
