@@ -66,7 +66,7 @@ ExternalProject_Add(tvm-build
 ExternalProject_Add_Step(tvm-build dmlc-build
   DEPENDEES patch
   WORKING_DIRECTORY <SOURCE_DIR>/3rdparty/dmlc-core
-  COMMAND ${CMAKE_COMMAND} --configure -DCMAKE_POSITION_INDEPENDENT_CODE=ON .
+  COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON .
   COMMAND ${CMAKE_MAKE_PROGRAM}
   BYPRODUCTS libdmlc.a
 )
