@@ -1,5 +1,5 @@
 diff --git a/cmake/config.cmake b/cmake/config.cmake
-index 9754385fa..a093f61fe 100644
+index 30c0eab60..040b2aea9 100644
 --- a/cmake/config.cmake
 +++ b/cmake/config.cmake
 @@ -79,7 +79,7 @@ set(USE_METAL OFF)
@@ -11,7 +11,7 @@ index 9754385fa..a093f61fe 100644
  
  # Whether enable OpenGL runtime
  set(USE_OPENGL OFF)
-@@ -130,7 +130,7 @@ set(USE_LLVM OFF)
+@@ -137,7 +137,7 @@ set(USE_LLVM OFF)
  set(USE_BYODT_POSIT OFF)
  
  # Whether use BLAS, choices: openblas, atlas, apple
