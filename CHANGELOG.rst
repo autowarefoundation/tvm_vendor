@@ -2,8 +2,8 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.2 (2022-06-06)
+------------------
 * fix: modify patch issue (`#10 <https://github.com/autowarefoundation/tvm_vendor/issues/10>`_)
   * fix: update patch
   * fix: add workaround to avoid multiple patch apply
