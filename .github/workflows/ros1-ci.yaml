@@ -17,6 +17,10 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+      - name: Set git config
+        uses: autowarefoundation/autoware-github-actions/set-git-config@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Workspace
         run: |
           mkdir -p src_tmp/tvm_vendor; \
