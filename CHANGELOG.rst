@@ -2,6 +2,13 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat: update tvm version to v0.9.0 (`#11 <https://github.com/autowarefoundation/tvm_vendor/issues/11>`_)
+  * feat: update tvm version to v0.9.0
+  * ci: fix ros1 ci
+* Contributors: Daisuke Nishimatsu
+
 0.8.2 (2022-06-06)
 ------------------
 * fix: modify patch issue (`#10 <https://github.com/autowarefoundation/tvm_vendor/issues/10>`_)
