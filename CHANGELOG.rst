@@ -2,8 +2,8 @@
 Changelog for package tvm_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.9.1 (2022-11-10)
+------------------
 * opencl dependency
 * add opencl to compilation
 * Contributors: Xinyu Wang
