@@ -53,7 +53,7 @@ endif()
 
 ExternalProject_Add(tvm-build
   GIT_REPOSITORY https://github.com/apache/tvm
-  GIT_TAG v0.9.0
+  GIT_TAG da7b48f9487c9ee8eb8c6a6d7f80b59969f842c8 # v0.10.0
   GIT_SHALLOW TRUE
   BUILD_IN_SOURCE TRUE
   PATCH_COMMAND git reset --hard && git apply ${PATCH_FILE}
