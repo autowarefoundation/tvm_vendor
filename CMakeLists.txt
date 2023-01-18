@@ -48,7 +48,12 @@ include(ExternalProject)
 
 set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch)
 if(ROS_VERSION EQUAL 2)
-  set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.gpu.patch)
+  find_package(CUDA)
+  if(CUDA_FOUND)
+    set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.gpu_cuda.patch)
+  else()
+    set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.gpu.patch)
+  endif()
 endif()
 
 ExternalProject_Add(tvm-build
