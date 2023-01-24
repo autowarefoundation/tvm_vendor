@@ -1,5 +1,5 @@
 diff --git a/cmake/config.cmake b/cmake/config.cmake
-index 0c803c0b6..254833bfa 100644
+index 18725de84..43fded431 100644
 --- a/cmake/config.cmake
 +++ b/cmake/config.cmake
 @@ -46,7 +46,7 @@
@@ -11,8 +11,8 @@ index 0c803c0b6..254833bfa 100644
  
  # Whether enable ROCM runtime
  #
-@@ -69,7 +69,7 @@ set(USE_AOCL OFF)
- #       time and trigger dynamic search and loading of OpenCL in runtime
+@@ -68,7 +68,7 @@ set(USE_AOCL OFF)
+ # - ON: enable OpenCL with cmake's auto search
  # - OFF: disable OpenCL
  # - /path/to/opencl-sdk: use specific path to opencl-sdk
 -set(USE_OPENCL OFF)
@@ -20,7 +20,7 @@ index 0c803c0b6..254833bfa 100644
  
  # Whether enable Metal runtime
  set(USE_METAL OFF)
-@@ -80,7 +80,7 @@ set(USE_METAL OFF)
+@@ -79,7 +79,7 @@ set(USE_METAL OFF)
  # - ON: enable Vulkan with cmake's auto search
  # - OFF: disable vulkan
  # - /path/to/vulkan-sdk: use specific path to vulkan-sdk
@@ -29,7 +29,7 @@ index 0c803c0b6..254833bfa 100644
  
  # Whether to use spirv-tools.and SPIRV-Headers from Khronos github or gitlab.
  #
-@@ -131,7 +131,7 @@ set(USE_MICRO_STANDALONE_RUNTIME OFF)
+@@ -133,7 +133,7 @@ set(USE_MICRO_STANDALONE_RUNTIME OFF)
  # - OFF: disable llvm, note this will disable CPU codegen
  #        which is needed for most cases
  # - /path/to/llvm-config: enable specific LLVM when multiple llvm-dev is available.
@@ -38,7 +38,7 @@ index 0c803c0b6..254833bfa 100644
  
  #---------------------------------------------
  # Contrib libraries
-@@ -146,7 +146,7 @@ set(USE_LLVM OFF)
+@@ -148,7 +148,7 @@ set(USE_LLVM OFF)
  set(USE_BYODT_POSIT OFF)
  
  # Whether use BLAS, choices: openblas, atlas, apple
@@ -47,7 +47,7 @@ index 0c803c0b6..254833bfa 100644
  
  # Whether to use MKL
  # Possible values:
-@@ -383,7 +383,7 @@ set(USE_PAPI OFF)
+@@ -370,7 +370,7 @@ set(USE_PAPI OFF)
  #   be enabled, otherwise it will be disabled.
  # Note that cmake will use `find_package` to find GTest. Please use cmake's
  # predefined variables to specify the path to the GTest package if needed.
